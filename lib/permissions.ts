@@ -1,0 +1,63 @@
+export const PERMISSIONS = {
+  APPLICATION_CREATE: "application:create",
+  APPLICATION_READ_OWN: "application:read_own",
+  APPLICATION_READ_ALL: "application:read_all",
+  APPLICATION_SIGN: "application:sign",
+  APPLICATION_SUBMIT: "application:submit",
+  APPLICATION_REVIEW: "application:review",
+  APPLICATION_APPROVE_REJECT: "application:approve_reject",
+  LICENSE_VIEW: "license:view",
+  LICENSE_ISSUE: "license:issue",
+  LICENSE_REVOKE_SUSPEND: "license:revoke_suspend",
+  USER_MANAGE: "user:manage",
+  SYSTEM_CONFIGURE: "system:configure",
+  AUDIT_READ: "audit:read",
+} as const;
+
+export type PermissionCode = (typeof PERMISSIONS)[keyof typeof PERMISSIONS];
+
+export const DEFAULT_ROLE_PERMISSIONS: Record<string, PermissionCode[]> = {
+  USER: [
+    PERMISSIONS.APPLICATION_CREATE,
+    PERMISSIONS.APPLICATION_READ_OWN,
+    PERMISSIONS.APPLICATION_SIGN,
+    PERMISSIONS.APPLICATION_SUBMIT,
+    PERMISSIONS.LICENSE_VIEW,
+  ],
+  REVIEWER: [
+    PERMISSIONS.APPLICATION_READ_ALL,
+    PERMISSIONS.APPLICATION_REVIEW,
+    PERMISSIONS.APPLICATION_APPROVE_REJECT,
+    PERMISSIONS.LICENSE_VIEW,
+  ],
+  LICENSE_MANAGER: [
+    PERMISSIONS.APPLICATION_READ_ALL,
+    PERMISSIONS.LICENSE_VIEW,
+    PERMISSIONS.LICENSE_ISSUE,
+    PERMISSIONS.LICENSE_REVOKE_SUSPEND,
+  ],
+  ADMIN: [
+    PERMISSIONS.APPLICATION_CREATE,
+    PERMISSIONS.APPLICATION_READ_OWN,
+    PERMISSIONS.APPLICATION_READ_ALL,
+    PERMISSIONS.APPLICATION_SIGN,
+    PERMISSIONS.APPLICATION_SUBMIT,
+    PERMISSIONS.APPLICATION_REVIEW,
+    PERMISSIONS.APPLICATION_APPROVE_REJECT,
+    PERMISSIONS.LICENSE_VIEW,
+    PERMISSIONS.LICENSE_ISSUE,
+    PERMISSIONS.LICENSE_REVOKE_SUSPEND,
+    PERMISSIONS.USER_MANAGE,
+    PERMISSIONS.SYSTEM_CONFIGURE,
+    PERMISSIONS.AUDIT_READ,
+  ],
+};
+
+export function hasPermission(
+  userRoleCode: string,
+  userPermissions: string[],
+  requiredPermission: PermissionCode
+): boolean {
+  if (userRoleCode === "ADMIN") return true;
+  return userPermissions.includes(requiredPermission);
+}

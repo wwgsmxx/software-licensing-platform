@@ -1,0 +1,150 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* FleXora SaaS Palette (teal/blue inspired) */
+    --background: 210 33% 98%; /* #f8fafc */
+    --foreground: 222.2 47.4% 11.2%; /* #0f172a */
+
+    --card: 0 0% 100%; /* #ffffff */
+    --card-foreground: 222.2 47.4% 11.2%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 222.2 47.4% 11.2%;
+
+    /* Official Government Blue */
+    --primary: 220 76% 45%; /* #0D9488 */
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 220 30% 95%; /* #e0f2f1 */
+    --secondary-foreground: 220 15% 25%; /* #334155 */
+
+    --muted: 220 20% 95%;
+    --muted-foreground: 220 15% 40%; /* #64748b */
+
+    --accent: 220 30% 95%;
+    --accent-foreground: 222.2 47.4% 11.2%;
+
+    --destructive: 0 72% 51%; /* #dc2626 */
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 220 20% 90%; /* #d1d5db */
+    --input: 220 20% 90%;
+    --ring: 220 76% 45%;
+
+    --radius: 0.375rem; /* Clean, formal 6px corners */
+  }
+
+  .dark {
+    --background: 210 20% 98%;
+    --foreground: 222.2 47.4% 11.2%;
+    --card: 0 0% 100%;
+    --card-foreground: 222.2 47.4% 11.2%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 222.2 47.4% 11.2%;
+    --primary: 214 78% 34%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 210 40% 96.1%;
+    --secondary-foreground: 215 25% 27%;
+    --muted: 210 40% 96.1%;
+    --muted-foreground: 215.4 16.3% 46.9%;
+    --accent: 210 40% 96.1%;
+    --accent-foreground: 222.2 47.4% 11.2%;
+    --destructive: 0 72% 51%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 214.3 31.8% 91.4%;
+    --input: 214.3 31.8% 91.4%;
+    --ring: 214 78% 34%;
+  }
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 5rem;
+  }
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground antialiased selection:bg-primary/15 selection:text-primary;
+    font-feature-settings: "rlig" 1, "calt" 1;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  }
+}
+
+/* Formal Government Portal Card & Utilities */
+.fleXora-card {
+  @apply bg-white border border-slate-200 rounded-md shadow-sm;
+}
+
+.fleXora-card-interactive {
+  @apply bg-white border border-slate-200 rounded-md shadow-sm hover:border-slate-300 hover:shadow transition-all duration-150;
+}
+
+/* Clean print rules for official certificates */
+@media print {
+  @page {
+    size: A4 portrait;
+    margin: 6mm 8mm;
+  }
+
+  html,
+  body {
+    background: #ffffff !important;
+    color: #000000 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    width: 100% !important;
+    min-height: auto !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+  /* Completely hide all site navigation, banners, headers, footers, sidebars */
+  header,
+  footer,
+  nav,
+  aside,
+  .print\\:hidden,
+  [data-print-hidden="true"],
+  .cmd-palette {
+    display: none !important;
+  }
+
+  /* Unconstrain layout containers */
+  main {
+    padding: 0 !important;
+    margin: 0 !important;
+    width: 100% !important;
+    display: block !important;
+  }
+
+  /* Fit certificate cleanly on 1 page */
+  .certificate-print-root {
+    page-break-inside: avoid !important;
+    break-inside: avoid !important;
+    max-width: 100% !important;
+    width: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+}
+
+/* Clean scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #f1f5f9;
+}
+::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+}
